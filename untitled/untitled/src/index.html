@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fart Sound Effect</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: black;
+            overflow: hidden;
+        }
+        .icon {
+            cursor: pointer;
+        }
+        .fade-text {
+            position: absolute;
+            color: lime;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 0 0 10px lime, 0 0 20px lime;
+            animation: fadeAway 2s ease-out forwards;
+        }
+        @keyframes fadeAway {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <img 
+        src="https://cdn.discordapp.com/attachments/895233277114351627/1319180491924050041/ee9cfed35ebc53fcce24e0a10d7ec22e.jpg?ex=67650612&is=6763b492&hm=a65e0f08ffec4f98384ec59527c9addd9449d583fd31692cd872d4d4361859df" 
+        alt="Icon" 
+        class="icon" 
+        id="fartIcon" 
+        width="200">
+
+    <audio id="fartSound" src="https://cdn.discordapp.com/attachments/895233277114351627/1319181159321833492/Fart_sound_effect.mp3?ex=676506b1&is=6763b531&hm=d30e78fd24cb0c153a50bbe3685115e86aa9d3e9b462f798e69ded05767662a4"></audio>
+
+    <script>
+        document.getElementById('fartIcon').addEventListener('click', function() {
+            const fartSound = document.getElementById('fartSound');
+            fartSound.currentTime = 0; // Reset sound to start if already playing
+            fartSound.play();
+
+            // Generate random number between 1 and 10
+            const randomSol = Math.floor(Math.random() * 10) + 1;
+
+            // Create a new text element
+            const text = document.createElement('div');
+            text.classList.add('fade-text');
+            text.textContent = `+${randomSol} SOL`;
+
+            // Position text randomly near the icon
+            const rect = document.getElementById('fartIcon').getBoundingClientRect();
+            const randomXOffset = Math.random() * 100 - 50; // Random offset between -50 and 50
+            const randomYOffset = Math.random() * 50 - 25; // Random offset between -25 and 25
+            text.style.left = `${rect.left + rect.width / 2 + randomXOffset}px`;
+            text.style.top = `${rect.top + randomYOffset}px`;
+
+            document.body.appendChild(text);
+
+            // Remove the text after animation ends
+            text.addEventListener('animationend', () => {
+                text.remove();
+            });
+        });
+    </script>
+</body>
+</html>
